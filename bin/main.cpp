@@ -4,12 +4,14 @@
 #include <memory>
 
 #include "app.h"
+#include "console_io.h"
 #include "json_reader.h"
 
 int main(void) {
     auto json_reader = std::make_unique<reader::Json>("cards.json");
+    auto console_io = std::make_unique<io::Console>();
 
-    memorix::App app(std::move(json_reader));
+    memorix::App app(std::move(json_reader), std::move(console_io));
 
     while (app.isRunning()) {
         try {

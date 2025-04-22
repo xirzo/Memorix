@@ -6,8 +6,8 @@
 
 namespace memorix {
 
-App::App(std::unique_ptr<FileReader> file_reader)
-    : is_running_(true), file_reader_(std::move(file_reader)) {
+App::App(std::unique_ptr<FileReader> file_reader, std::unique_ptr<IO> io)
+    : is_running_(true), file_reader_(std::move(file_reader)), io_(std::move(io)) {
     try {
         cards_ = file_reader_->tryRead();
     }

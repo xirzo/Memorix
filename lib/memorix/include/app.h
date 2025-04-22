@@ -4,13 +4,14 @@
 #include <memory>
 
 #include "file_reader.h"
+#include "io.h"
 
 namespace memorix {
 
 class App
 {
 public:
-    explicit App(std::unique_ptr<FileReader> file_reader);
+    App(std::unique_ptr<FileReader> file_reader, std::unique_ptr<IO> io);
 
     bool isRunning() const;
     void update();
@@ -18,6 +19,7 @@ public:
 private:
     bool is_running_;
     std::unique_ptr<FileReader> file_reader_;
+    std::unique_ptr<IO> io_;
     std::vector<Card> cards_;
 };
 
