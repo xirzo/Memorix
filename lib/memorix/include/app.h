@@ -1,18 +1,23 @@
 #ifndef APP_H
 #define APP_H
 
+#include <memory>
+
+#include "file_reader.h"
+
 namespace memorix {
 
 class App
 {
 public:
-    App();
+    explicit App(std::unique_ptr<FileReader> file_reader);
 
-    bool IsRunning() const;
-    void Update();
+    bool isRunning() const;
+    void update();
 
 private:
     bool is_running_;
+    std::unique_ptr<FileReader> file_reader_;
 };
 
 }  // namespace memorix
