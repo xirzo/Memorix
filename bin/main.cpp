@@ -1,9 +1,9 @@
 #include <cstdlib>
 
-#include "memorix.h"
+#include "app.h"
 
 int main(void) {
-    Memorix app;
+    memorix::App app;
 
     while (app.IsRunning()) {
         app.Update();
