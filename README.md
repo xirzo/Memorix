@@ -50,6 +50,23 @@
 
 Assuming you have a `cards.json` file in your working directory, here is a sample interactive session:
 
+```json
+[
+  {
+    "front": "What is the capital of France?",
+    "back": "Paris"
+  },
+  {
+    "front": "Which planet is the largest in the Solar System?",
+    "back": "Jupiter"
+  },
+  {
+    "front": "Who wrote \"Hamlet\"?",
+    "back": "William Shakespeare"
+  }
+]
+```
+
 ```bash
 $ ./memorix_app
 What is the capital of France?
