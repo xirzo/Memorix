@@ -28,6 +28,8 @@ memorix::InputType Console::getInput() const {
         return memorix::InputType::NEXT_CARD;
     } else if (i == "p") {
         return memorix::InputType::PREVIOUS_CARD;
+    } else if (i == "f") {
+        return memorix::InputType::FLIP_CARD;
     }
     return memorix::InputType::UNKNOWN;
 }

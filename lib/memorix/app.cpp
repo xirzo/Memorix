@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#include "card_deck.h"
+
 namespace memorix {
 
 App::App(std::unique_ptr<FileReader> file_reader, std::unique_ptr<IO> io)
@@ -22,6 +24,8 @@ bool App::isRunning() const {
 }
 
 void App::update() {
+    std::cout << deck_->current() << std::endl;
+
     if (io_->hasInput() == false) {
         return;
     }
@@ -39,9 +43,21 @@ void App::update() {
         case InputType::PREVIOUS_CARD:
             deck_->previous();
             break;
-    }
+        case InputType::FLIP_CARD:
+            CardViewWay view_way = deck_->viewWay();
 
-    std::cout << deck_->current().front << " --- " << deck_->current().back << std::endl;
+            switch (view_way) {
+                case CardViewWay::FRONT:
+                    view_way = CardViewWay::BACK;
+                    break;
+                case CardViewWay::BACK:
+                    view_way = CardViewWay::FRONT;
+                    break;
+            }
+
+            deck_->setCardViewWay(view_way);
+            break;
+    }
 }
 
 }  // namespace memorix

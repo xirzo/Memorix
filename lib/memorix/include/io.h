@@ -8,6 +8,7 @@ enum class InputType
     UNKNOWN,
     NEXT_CARD,
     PREVIOUS_CARD,
+    FLIP_CARD,
 };
 
 class IO
