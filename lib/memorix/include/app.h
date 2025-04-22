@@ -18,6 +18,7 @@ public:
 private:
     bool is_running_;
     std::unique_ptr<FileReader> file_reader_;
+    std::vector<Card> cards_;
 };
 
 }  // namespace memorix
