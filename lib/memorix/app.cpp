@@ -11,7 +11,7 @@ App::App(std::unique_ptr<FileReader> file_reader)
     try {
         cards_ = file_reader_->tryRead();
     }
-    catch (const std::exception &e) {
+    catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         throw;
     }
@@ -21,6 +21,11 @@ bool App::isRunning() const {
     return is_running_;
 }
 
-void App::update() {}
+void App::update() {
+    for (auto& card : cards_) {
+        std::cout << card.front << " --- " << card.back << std::endl;
+        is_running_ = false;
+    }
+}
 
 }  // namespace memorix
