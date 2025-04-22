@@ -31,19 +31,19 @@ void App::update() {
     }
 
     switch (io_->getInput()) {
-        case InputType::EMPTY:
-            std::cout << "Empty input" << std::endl;
-            return;
-        case InputType::UNKNOWN:
+        case InputType::UNKNOWN: {
             std::cout << "Unknown input" << std::endl;
             return;
-        case InputType::NEXT_CARD:
+        }
+        case InputType::NEXT_CARD: {
             deck_->next();
             break;
-        case InputType::PREVIOUS_CARD:
+        }
+        case InputType::PREVIOUS_CARD: {
             deck_->previous();
             break;
-        case InputType::FLIP_CARD:
+        }
+        case InputType::FLIP_CARD: {
             CardViewWay view_way = deck_->viewWay();
 
             switch (view_way) {
@@ -57,6 +57,11 @@ void App::update() {
 
             deck_->setCardViewWay(view_way);
             break;
+        }
+        case InputType::QUIT: {
+            is_running_ = false;
+            return;
+        }
     }
 }
 

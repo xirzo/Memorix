@@ -4,11 +4,11 @@
 namespace memorix {
 enum class InputType
 {
-    EMPTY,
     UNKNOWN,
     NEXT_CARD,
     PREVIOUS_CARD,
     FLIP_CARD,
+    QUIT,
 };
 
 class IO
