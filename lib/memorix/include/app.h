@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "card_deck.h"
 #include "file_reader.h"
 #include "io.h"
 
@@ -20,7 +21,7 @@ private:
     bool is_running_;
     std::unique_ptr<FileReader> file_reader_;
     std::unique_ptr<IO> io_;
-    std::vector<Card> cards_;
+    std::unique_ptr<CardDeck> deck_;
 };
 
 }  // namespace memorix
