@@ -22,9 +22,23 @@ bool App::isRunning() const {
 }
 
 void App::update() {
-    for (auto& card : cards_) {
-        std::cout << card.front << " --- " << card.back << std::endl;
-        is_running_ = false;
+    if (io_->hasInput() == false) {
+        return;
+    }
+
+    switch (io_->getInput()) {
+        case InputType::EMPTY:
+            std::cout << "Empty input" << std::endl;
+            break;
+        case InputType::UNKNOWN:
+            std::cout << "Used unknown input" << std::endl;
+            break;
+        case InputType::NEXT_CARD:
+            std::cout << "Moved to next card" << std::endl;
+            break;
+        case InputType::PREVIOUS_CARD:
+            std::cout << "Moved to previous card" << std::endl;
+            break;
     }
 }
 

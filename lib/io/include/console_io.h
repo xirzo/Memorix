@@ -8,11 +8,8 @@ namespace io {
 class Console : public memorix::IO
 {
 public:
-    Console();
-
-    bool waitInput() const override;
-
-private:
+    bool hasInput() const override;
+    memorix::InputType getInput() const override;
 };
 
 };  // namespace io
