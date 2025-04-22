@@ -1,8 +1,13 @@
 #include <cstdlib>
 
-#include "test.h"
+#include "memorix.h"
 
 int main(void) {
-    print_hello_world();
+    Memorix app;
+
+    while (app.IsRunning()) {
+        app.Update();
+    }
+
     return EXIT_SUCCESS;
 }

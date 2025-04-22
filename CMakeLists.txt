@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.30.5)
 
-project(memorix LANGUAGES CXX)
+project(memorix_app LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
