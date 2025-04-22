@@ -13,9 +13,15 @@ class App
 {
 public:
     App(std::unique_ptr<FileReader> file_reader, std::unique_ptr<IO> io);
+    ~App();
 
     bool isRunning() const;
-    void update();
+    void run();
+    void stop();
+
+private:
+    void updateDisplay();
+    void handleInput(InputType input);
 
 private:
     bool is_running_;

@@ -4,24 +4,27 @@
 #include <memory>
 
 #include "app.h"
-#include "console_io.h"
 #include "json_reader.h"
+#include "server.h"
 
 int main(void) {
-    auto json_reader = std::make_unique<reader::Json>("cards.json");
-    auto console_io = std::make_unique<io::Console>();
+    try {
+        auto json_reader = std::make_unique<reader::Json>("cards.json");
+        auto console_io = std::make_unique<io::Server>();
 
-    memorix::App app(std::move(json_reader), std::move(console_io));
+        memorix::App app(std::move(json_reader), std::move(console_io));
 
-    while (app.isRunning()) {
-        try {
-            app.update();
-        }
-        catch (const std::exception& e) {
-            std::cerr << e.what() << std::endl;
-            return EXIT_FAILURE;
-        }
+        app.run();
+
+        std::cout << "Press any key to quit." << std::endl;
+
+        std::cin.get();
+        app.stop();
+
+        return EXIT_SUCCESS;
     }
-
-    return EXIT_SUCCESS;
+    catch (const std::exception& e) {
+        std::cerr << "Fatal error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 }

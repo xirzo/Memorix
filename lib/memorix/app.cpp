@@ -1,6 +1,7 @@
 #include "app.h"
 
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <memory>
 
@@ -9,9 +10,11 @@
 namespace memorix {
 
 App::App(std::unique_ptr<FileReader> file_reader, std::unique_ptr<IO> io)
-    : is_running_(true), file_reader_(std::move(file_reader)), io_(std::move(io)) {
+    : is_running_(false), file_reader_(std::move(file_reader)), io_(std::move(io)) {
     try {
         deck_ = std::make_unique<CardDeck>(file_reader_->tryRead());
+
+        io_->setInputCallback([this](InputType input) { handleInput(input); });
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
@@ -19,49 +22,71 @@ App::App(std::unique_ptr<FileReader> file_reader, std::unique_ptr<IO> io)
     }
 }
 
-bool App::isRunning() const {
-    return is_running_;
+App::~App() {
+    stop();
 }
 
-void App::update() {
-    io_->output(deck_->current());
+void App::run() {
+    is_running_ = true;
 
-    if (io_->hasInput() == false) {
-        return;
+    updateDisplay();
+
+    io_->startListening();
+}
+
+void App::stop() {
+    if (is_running_) {
+        is_running_ = false;
+        io_->stopListening();
     }
+}
 
-    switch (io_->getInput()) {
-        case InputType::UNKNOWN: {
-            std::cout << "Unknown input" << std::endl;
-            return;
-        }
-        case InputType::NEXT_CARD: {
-            deck_->next();
-            break;
-        }
-        case InputType::PREVIOUS_CARD: {
-            deck_->previous();
-            break;
-        }
-        case InputType::FLIP_CARD: {
-            CardViewWay view_way = deck_->viewWay();
+void App::updateDisplay() {
+    io_->output(deck_->current());
+}
 
-            switch (view_way) {
-                case CardViewWay::FRONT:
-                    view_way = CardViewWay::BACK;
-                    break;
-                case CardViewWay::BACK:
-                    view_way = CardViewWay::FRONT;
-                    break;
+void App::handleInput(InputType input) {
+    try {
+        switch (input) {
+            case InputType::UNKNOWN: {
+                std::cout << "Unknown input: Quiting..." << std::endl;
+                stop();
+                return;
             }
+            case InputType::NEXT_CARD: {
+                deck_->next();
+                break;
+            }
+            case InputType::PREVIOUS_CARD: {
+                deck_->previous();
+                break;
+            }
+            case InputType::FLIP_CARD: {
+                CardViewWay view_way = deck_->viewWay();
 
-            deck_->setCardViewWay(view_way);
-            break;
+                switch (view_way) {
+                    case CardViewWay::FRONT:
+                        view_way = CardViewWay::BACK;
+                        break;
+                    case CardViewWay::BACK:
+                        view_way = CardViewWay::FRONT;
+                        break;
+                }
+
+                deck_->setCardViewWay(view_way);
+                break;
+            }
+            case InputType::QUIT: {
+                stop();
+                return;
+            }
         }
-        case InputType::QUIT: {
-            is_running_ = false;
-            return;
-        }
+
+        updateDisplay();
+    }
+    catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        stop();
     }
 }
 

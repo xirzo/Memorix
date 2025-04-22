@@ -4,7 +4,11 @@ project(memorix_app LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+find_package(Threads REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(OpenSSL REQUIRED)
 find_package(nlohmann_json 3.11.3 REQUIRED)
+find_package(Crow)
 
 add_subdirectory(bin)
 add_subdirectory(lib)
