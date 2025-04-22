@@ -24,7 +24,7 @@ bool App::isRunning() const {
 }
 
 void App::update() {
-    std::cout << deck_->current() << std::endl;
+    io_->output(deck_->current());
 
     if (io_->hasInput() == false) {
         return;

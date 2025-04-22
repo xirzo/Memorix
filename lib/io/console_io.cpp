@@ -35,4 +35,8 @@ memorix::InputType Console::getInput() const {
     return memorix::InputType::UNKNOWN;
 }
 
+void Console::output(std::string_view text) const {
+    std::cout << text << std::endl;
+}
+
 }  // namespace io

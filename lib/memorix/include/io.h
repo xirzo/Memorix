@@ -1,7 +1,10 @@
 #ifndef IO_H
 #define IO_H
 
+#include <string_view>
+
 namespace memorix {
+
 enum class InputType
 {
     UNKNOWN,
@@ -18,6 +21,7 @@ public:
 
     virtual bool hasInput() const = 0;
     virtual InputType getInput() const = 0;
+    virtual void output(std::string_view text) const = 0;
 };
 }  // namespace memorix
 
